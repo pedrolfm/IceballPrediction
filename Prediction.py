@@ -8,8 +8,8 @@ from slicer.ScriptedLoadableModule import *
 from slicer.util import VTKObservationMixin
 import SimpleITK as sitk
 import sitkUtils
-import ablation_registration as ar
-import inference as ai
+import utils.ablation_registration as ar
+import utils.inference as ai
 import subprocess
 
 
@@ -26,17 +26,15 @@ class Prediction(ScriptedLoadableModule):
     ScriptedLoadableModule.__init__(self, parent)
     self.parent.title = "Prediction"  # TODO: make this more human readable by adding spaces
     self.parent.categories = ["Examples"]  # TODO: set categories (folders where the module shows up in the module selector)
-    self.parent.dependencies = []  # TODO: add here list of module names that this module requires
-    self.parent.contributors = ["John Doe (AnyWare Corp.)"]  # TODO: replace with "Firstname Lastname (Organization)"
+    self.parent.dependencies = ["Monai"]  # TODO: add here list of module names that this module requires
+    self.parent.contributors = ["Pedro Moreira (BWH)"]  # TODO: replace with "Firstname Lastname (Organization)"
     # TODO: update with short description of the module and a link to online module documentation
     self.parent.helpText = """
-This is an example of scripted loadable module bundled in an extension.
-See more information in <a href="https://github.com/organization/projectname#Prediction">module documentation</a>.
+This module predicts the iceball boundaries in focal cryoablation of prostate cancer.
 """
     # TODO: replace with organization, grant and thanks
     self.parent.acknowledgementText = """
-This file was originally developed by Jean-Christophe Fillion-Robin, Kitware Inc., Andras Lasso, PerkLab,
-and Steve Pieper, Isomics, Inc. and was partially funded by NIH grant 3P41RR013218-12S1.
+...
 """
 
     # Additional initialization step after application startup is complete
@@ -268,8 +266,6 @@ class PredictionWidget(ScriptedLoadableModuleWidget, VTKObservationMixin):
     self._parameterNode.SetNodeReferenceID("InputVolume", self.ui.inputSelector.currentNodeID)
     self._parameterNode.SetNodeReferenceID("MarkupVolume", self.ui.markupNode.currentNodeID)
     self._parameterNode.SetNodeReferenceID("OutputVolume", self.ui.outputSelector.currentNodeID)
-    self._parameterNode.SetParameter("Invert", "true" if self.ui.invertOutputCheckBox.checked else "false")
-
 
     self._parameterNode.EndModify(wasModified)
 

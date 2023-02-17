@@ -19,7 +19,7 @@ import argparse
 import time
 
 
-from common import *
+from utils.common import *
 
 
 class prediction:
